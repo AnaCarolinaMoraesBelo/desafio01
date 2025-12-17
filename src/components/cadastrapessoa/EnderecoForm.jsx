@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Row, Col, Select } from "antd";
+import Endereco from "./objetos/pessoas/DAOs/ENDERECO/Endereco.mjs";
 
 const { Option } = Select;
 
