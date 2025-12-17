@@ -36,6 +36,11 @@ function EnderecoForm() {
         placeholder="00000000" 
         maxLength={8} 
         onChange={handleCepChange}
+        onKeyPress={(event) => {
+          if (!/[0-9]/.test(event.key)) {
+            event.preventDefault();
+          }
+        }}
         />
       </Form.Item>
 
