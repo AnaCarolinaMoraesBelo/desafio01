@@ -5,14 +5,38 @@ import Endereco from "./objetos/pessoas/DAOs/ENDERECO/Endereco.mjs";
 const { Option } = Select;
 
 function EnderecoForm() {
+    const [form] = Form.useForm();
+    const handleCepChange = async (e) => {
+        const cep = e.target.value.replace(/\D/g, "");
+        if (cep.length === 8) {
+            try {
+                const enderecoService = new Endereco();
+                await enderecoService.setCep(cep);
+                form.setFieldsValue({
+                endereco: {
+                  logradouro: enderecoService.getLogradouro(),
+                  bairro: enderecoService.getBairro(),
+                  cidade: enderecoService.getCidade(),
+                  uf: enderecoService.getUf(),                      regiao: enderecoService.getRegiao(),
+            },
+        });
+        } catch (error) {
+            message.error(error.message);
+        }
+    }
+    };
   return (
-    <>
+    <Form form={form} layout="vertical">
       <Form.Item
         label="CEP"
         name={["endereco", "cep"]}
         rules={[{ required: true, message: "Informe o CEP!" }]}
       >
-        <Input placeholder="00000-000" maxLength={9} />
+        <Input
+        placeholder="00000000" 
+        maxLength={8} 
+        onChange={handleCepChange}
+        />
       </Form.Item>
 
       <Form.Item
@@ -66,7 +90,7 @@ function EnderecoForm() {
           </Form.Item>
         </Col>
       </Row>
-    </>
+    </Form>
   );
 }
 
